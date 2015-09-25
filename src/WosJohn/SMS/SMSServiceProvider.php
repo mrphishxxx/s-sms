@@ -16,6 +16,7 @@ use WosJohn\SMS\Drivers\EmailSMS;
 use WosJohn\SMS\Drivers\EZTextingSMS;
 use WosJohn\SMS\Drivers\MozeoSMS;
 use WosJohn\SMS\Drivers\TwilioSMS;
+use WosJohn\SMS\Drivers\CCPSMS;
 
 class SMSServiceProvider extends ServiceProvider
 {
@@ -67,7 +68,7 @@ class SMSServiceProvider extends ServiceProvider
     /**
      * Register the correct driver based on the config file.
      *
-     * @return CallFireSMS|EmailSMS|EZTextingSMS|MozeoSMS|TwilioSMS
+     * @return CallFireSMS|EmailSMS|EZTextingSMS|MozeoSMS|TwilioSMS|CCPSMS
      * @throws \InvalidArgumentException
      */
     public function registerSender()
@@ -81,6 +82,9 @@ class SMSServiceProvider extends ServiceProvider
             case 'twilio':
                 return $this->buildTwilio();
 
+            case 'twilio':
+                return $this->buildCCP();
+
             case 'eztexting':
                 return $this->buildEZTexting();
 
@@ -93,6 +97,19 @@ class SMSServiceProvider extends ServiceProvider
             default:
                 throw new \InvalidArgumentException('Invalid SMS driver.');
         }
+    }
+
+    protected function buildCCP()
+    {
+        return new CCPSMS(
+            new \Services_CCP(
+                config('sms.ccp.account_sid'),
+                config('sms.ccp.auth_token'),
+                config('sms.ccp.app_id')
+            ),
+            config('sms.ccp.auth_token'),
+            $this->app['request']->url()
+        );
     }
 
     protected function buildTwilio()
@@ -154,7 +171,7 @@ class SMSServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array('sms', 'emailsms', 'twiliosms', 'mozeosms', 'eztextingsms', 'callfiresms');
+        return array('sms', 'emailsms', 'twiliosms','ccpsms', 'mozeosms', 'eztextingsms', 'callfiresms');
     }
 
 }
