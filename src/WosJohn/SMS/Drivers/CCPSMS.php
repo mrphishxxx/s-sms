@@ -50,7 +50,7 @@ class CCPSMS extends AbstractSMS implements DriverInterface {
      * @param $url
      * @param bool $verify
      */
-    public function __construct(CCP $ccp, $authToken, $url, $verify = false)
+    public function __construct(CCP $ccp, $authToken, $url)
     {
         $this->ccp = $ccp;
         $this->authToken = $authToken;
@@ -69,7 +69,7 @@ class CCPSMS extends AbstractSMS implements DriverInterface {
         $composeMessage = $message->composeMessage();
 
         foreach ($message->getTo() as $to) {
-            $this->message = $this->ccp->account(config('sms.ccp.account_sid'),config('sms.ccp.auth_token'))->appid(config('sms.ccp.app_id'))->create($to,$composeMessage,$tempId);
+            $this->message = $this->ccp->account($this->ccp->AccountSid,$this->authToken)->appid($this->ccp->AccountSid)->create($to,$composeMessage,$tempId);
         }
     }
 
