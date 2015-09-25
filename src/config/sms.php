@@ -46,6 +46,11 @@
     | Company Key:  Your company key. (https://www.mozeo.com/mozeo/customer/platformdetails.php)
     | Username:     Your username.  (https://www.mozeo.com/mozeo/customer/platformdetails.php)
     | Password:     Your password.  (https://www.mozeo.com/mozeo/customer/platformdetails.php)
+    |--------------------------------------------------------------------------
+    | CCP
+    | Company Key:  Your company key. (https://www.mozeo.com/mozeo/customer/platformdetails.php)
+    | Username:     Your username.  (https://www.mozeo.com/mozeo/customer/platformdetails.php)
+    | Password:     Your password.  (https://www.mozeo.com/mozeo/customer/platformdetails.php)
 
 */
 
@@ -69,5 +74,10 @@ return [
         'companyKey' => 'Your Mozeo Company Key',
         'username' => 'Your Mozeo Username',
         'password' => 'Your Mozeo Password'
+    ],
+    'ccp' => [
+        'account_sid' => 'Your SID',
+        'auth_token' => 'Your Token',
+        'app_id' => 'Your AID'
     ]
 ];
